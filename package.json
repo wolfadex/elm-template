@@ -11,6 +11,7 @@
     "build": "elm-review && elm-test-rs && vite build",
     "serve": "vite preview",
     "test": "elm-test-rs",
+    "test-watch": "elm-test-rs --watch",
     "review": "elm-review --fix-all",
     "review-watch": "elm-review --fix --watch"
   },
