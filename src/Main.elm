@@ -1,10 +1,14 @@
-module Main exposing (main)
+module Main exposing (init, main, subscriptions, update, view)
 
+import App
 import Browser exposing (Document)
+import Effect
 import Element exposing (..)
+import Shared exposing (Flags)
+import View exposing (View)
 
 
-main : Program Flags Model Msg
+main : Program Flags App.Model Msg
 main =
     Browser.document
         { init = init
@@ -14,42 +18,39 @@ main =
         }
 
 
-type alias Flags =
-    ()
+init : Flags -> ( App.Model, Cmd Msg )
+init flags =
+    Tuple.mapSecond (Effect.toCmd AppMessage) (App.init flags)
 
 
-type alias Model =
-    {}
-
-
-init : Flags -> ( Model, Cmd Msg )
-init () =
-    ( {}, Cmd.none )
-
-
-subscriptions : Model -> Sub Msg
+subscriptions : App.Model -> Sub Msg
 subscriptions _ =
     Sub.none
 
 
 type Msg
-    = NoOp
+    = AppMessage App.Msg
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> App.Model -> ( App.Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
+        AppMessage message ->
+            Tuple.mapSecond
+                (Effect.toCmd AppMessage)
+                (App.update message model)
 
 
-view : Model -> Document Msg
+view : App.Model -> Document Msg
 view model =
-    { title = "Hello, Elm!"
-    , body = [ layout [ width fill, height fill ] (viewModel model) ]
+    let
+        content : View App.Msg
+        content =
+            App.view model
+    in
+    { title = content.title
+    , body =
+        [ layout [ width fill, height fill ]
+            (map AppMessage content.body)
+        ]
     }
-
-
-viewModel : Model -> Element Msg
-viewModel _ =
-    text "Hello, Elm!"
