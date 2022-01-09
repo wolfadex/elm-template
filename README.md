@@ -9,6 +9,7 @@ A default template for building Elm applications. Includes hot-module reload of 
 - Hot Module Reload of all code
 - Basic unit test examples
 - Github Actions CI for running tests
+- Basic setup of elm-review
 
 ## Get Started
 
