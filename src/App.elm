@@ -2,17 +2,18 @@ module App exposing (Model, Msg, init, subscriptions, update, view)
 
 import Effect exposing (Effect)
 import Element exposing (..)
+import Element.Input as Input
 import Shared exposing (Flags)
 import View exposing (View)
 
 
 type alias Model =
-    {}
+    Int
 
 
 init : Flags -> ( Model, Effect Msg )
 init () =
-    ( {}, Effect.none )
+    ( 0, Effect.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -21,18 +22,36 @@ subscriptions _ =
 
 
 type Msg
-    = NoOp
+    = Increment
+    | Decrement
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Effect.none )
+        Increment ->
+            ( model + 1, Effect.none )
+
+        Decrement ->
+            ( model - 1, Effect.none )
 
 
 view : Model -> View Msg
 view _ =
     { title = "Hello, Elm!"
-    , body = text "Hello, Elm!"
+    , body =
+        column
+            []
+            [ text "Hello, Elm!"
+            , Input.button
+                []
+                { label = text "Increment"
+                , onPress = Just Increment
+                }
+            , Input.button
+                []
+                { label = text "Decrement"
+                , onPress = Just Decrement
+                }
+            ]
     }

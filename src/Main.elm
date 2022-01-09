@@ -1,4 +1,4 @@
-module Main exposing (init, main, subscriptions, update, view)
+module Main exposing (Msg, main)
 
 import App
 import Browser exposing (Document)
@@ -24,8 +24,8 @@ init flags =
 
 
 subscriptions : App.Model -> Sub Msg
-subscriptions _ =
-    Sub.none
+subscriptions model =
+    Sub.map AppMessage (App.subscriptions model)
 
 
 type Msg
@@ -33,12 +33,10 @@ type Msg
 
 
 update : Msg -> App.Model -> ( App.Model, Cmd Msg )
-update msg model =
-    case msg of
-        AppMessage message ->
-            Tuple.mapSecond
-                (Effect.toCmd AppMessage)
-                (App.update message model)
+update (AppMessage message) model =
+    Tuple.mapSecond
+        (Effect.toCmd AppMessage)
+        (App.update message model)
 
 
 view : App.Model -> Document Msg
