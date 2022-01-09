@@ -39,7 +39,7 @@ config =
     , NoDebug.TodoOrToString.rule
     , NoDeprecated.rule NoDeprecated.defaults
     , NoExposingEverything.rule
-        |> Review.Rule.ignoreErrorsForDirectories [ "test" ]
+        |> Review.Rule.ignoreErrorsForDirectories [ "tests" ]
     , NoImportingEverything.rule [ "Element" ]
     , NoInconsistentAliases.config
         [ ( "Element.Input", "Input" )
