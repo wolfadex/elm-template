@@ -11,9 +11,17 @@ type alias Model =
     Int
 
 
+
+---- INIT ----
+
+
 init : Flags -> ( Model, Effect Msg )
 init () =
     ( 0, Effect.none )
+
+
+
+---- UPDATE ----
 
 
 subscriptions : Model -> Sub Msg
@@ -34,6 +42,10 @@ update msg model =
 
         Decrement ->
             ( model - 1, Effect.none )
+
+
+
+---- VIEW ----
 
 
 view : Model -> View Msg
