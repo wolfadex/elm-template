@@ -11,7 +11,7 @@ suite =
     Test.describe "Hello World"
         [ Test.test "renders and runs the main view" <|
             \_ ->
-                App.view {}
+                App.view 0
                     |> .body
                     |> Query.fromElement
                     |> Query.has [ Html.text "Hello, Elm!" ]
